@@ -153,7 +153,11 @@ class Eventbrite_Query extends WP_Query {
 		// We need the Eventbrite user ID (or an organizer) if we're getting only public events.
 		if ( ! isset( $this->query_vars['display_private'] ) || true !== $this->query_vars['display_private'] ) {
 			// Set sorting.
-			$params['sort_by'] = 'date';
+			if ( ! empty( $this->query_vars['sort_by'] ) ) {
+				$params['sort_by'] = $this->query_vars['sort_by'];
+			} else {
+				$params['sort_by'] = 'date';
+			}
 
 			// Set the user ID if we don't have a specified organizer.
 			if ( ! empty( $this->query_vars['organizer_id'] ) ) {
